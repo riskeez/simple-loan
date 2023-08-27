@@ -43,7 +43,7 @@ public class DataSeeder : IDataSeeder
 
         Stopwatch sw = Stopwatch.StartNew();
         
-        IReadOnlyCollection<string> loanTypes = await _loanTypeProvider.GetAsync(cancellationToken);
+        IReadOnlyCollection<string> loanTypes = _loanTypeProvider.Get();
         string loanType = loanTypes.FirstOrDefault() ?? throw new Exception("No loan types have found.");
         ILoanCalculator calculator = _calculatorFactory.Get(loanType);
         

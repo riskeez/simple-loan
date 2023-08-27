@@ -5,23 +5,25 @@ namespace SimpleLoan.Application.Finance;
 public class LoanCalculatorFactory : ILoanCalculatorFactory
 {
     private readonly IServiceProvider _serviceProvider;
-    private Dictionary<string, Type> _types = new()
-    {
-        ["standard"] = typeof(LoanStandardCalculator)
-    };
+    private readonly IDictionary<string, Type> _types;
 
-    public LoanCalculatorFactory(IServiceProvider serviceProvider)
+    public LoanCalculatorFactory(
+        IDictionary<string, Type> types, 
+        IServiceProvider serviceProvider)
     {
+        _types = types;
         _serviceProvider = serviceProvider;
     }
     
     public ILoanCalculator Get(string type)
     {
-        var calculator = _serviceProvider.GetService(_types[type]);
-        if (calculator == null)
+        _types.TryGetValue(type.Trim().ToLower(), out Type? serviceType);
+
+        if (serviceType == null)
         {
             throw new NotImplementedException();
         }
-        return (ILoanCalculator) calculator;
+
+        return (ILoanCalculator)_serviceProvider.GetService(serviceType);
     }
 }

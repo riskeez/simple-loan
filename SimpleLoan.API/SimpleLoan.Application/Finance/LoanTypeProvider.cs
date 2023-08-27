@@ -4,7 +4,8 @@ namespace SimpleLoan.Application.Finance;
 
 public class LoanTypeProvider : ILoanTypeProvider
 {
-    public Task<IReadOnlyCollection<string>> GetAsync(CancellationToken cancellationToken)
+    // This can be read from config 
+    public IReadOnlyCollection<string> Get()
     {
         // read from config
         var types = new List<string>()
@@ -13,6 +14,6 @@ public class LoanTypeProvider : ILoanTypeProvider
             "car"
         };
         
-        return Task.FromResult<IReadOnlyCollection<string>>(types.AsReadOnly());
+        return types;
     }
 }

@@ -10,7 +10,9 @@
       <ProjectReference Include="..\SimpleLoan.Infrastructure\SimpleLoan.Infrastructure.csproj" />
     </ItemGroup>
 
-
+    <ItemGroup>
+        <InternalsVisibleTo Include="SimpleLoan.UnitTests" />
+    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="FastEndpoints" Version="5.15.0" />

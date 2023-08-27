@@ -23,7 +23,7 @@ public class GetLoanTypesEndpoint : EndpointWithoutRequest<IEnumerable<string>>
     
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {
-        var types = await _loanTypeProvider.GetAsync(cancellationToken);
+        var types = _loanTypeProvider.Get();
         
         await SendOkAsync(types, cancellationToken);
     }

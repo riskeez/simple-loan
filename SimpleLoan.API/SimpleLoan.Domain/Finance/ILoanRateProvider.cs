@@ -3,5 +3,5 @@
 // Gets interest rate for the loan type
 public interface ILoanRateProvider
 {
-    Task<decimal> GetRateAsync(string type);
+    Task<decimal> GetRateAsync(string type, CancellationToken cancellationToken);
 }

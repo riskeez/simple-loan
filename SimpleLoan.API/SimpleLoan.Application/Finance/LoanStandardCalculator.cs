@@ -7,19 +7,19 @@ namespace SimpleLoan.Application.Finance;
 public class LoanStandardCalculator : ILoanCalculator
 {
     private readonly ILoanRateProvider _rateProvider;
-    private readonly ILogger<LoanStandardCalculator> _logger;
 
     public LoanStandardCalculator(ILoanRateProvider rateProvider, ILogger<LoanStandardCalculator> logger)
     {
         _rateProvider = rateProvider;
-        _logger = logger;
     }
+
+    public string Type { get; } = "standard";
 
     public async Task<List<PaymentPeriod>> CalculateAsync(ICalculation loan, CancellationToken cancellationToken)
     {
         List<PaymentPeriod> result = new();
 
-        decimal rate = await _rateProvider.GetRateAsync(loan.Type) / 100.0m;
+        decimal rate = await _rateProvider.GetRateAsync(Type, cancellationToken) / 100.0m;
 
         decimal principalPayment = Math.Round(loan.Amount / loan.Period, 2, MidpointRounding.AwayFromZero);
         decimal remainingLoan = loan.Amount;

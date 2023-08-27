@@ -2,5 +2,5 @@
 
 public interface ILoanTypeProvider
 {
-    Task<IReadOnlyCollection<string>> GetAsync(CancellationToken cancellationToken);
+    IReadOnlyCollection<string> Get();
 }
