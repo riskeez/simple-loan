@@ -22,6 +22,11 @@ public static class Extensions
             opts.UseSqlite(dbConnection,
                 sqlOpts => sqlOpts.MigrationsAssembly(typeof(PaymentDbContext).GetTypeInfo().Assembly.GetName().Name));
         });
+
+        services.AddCors(opts =>
+        {
+            opts.AddDefaultPolicy(p => p.WithOrigins("*"));
+        });
         
         return services;
     }
@@ -29,6 +34,7 @@ public static class Extensions
     public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
     {
         app.UseMiddleware<ErrorHandlerMiddleware>();
+        app.UseCors();
         
         return app;
     }
