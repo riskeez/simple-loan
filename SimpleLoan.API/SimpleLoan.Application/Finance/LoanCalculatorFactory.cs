@@ -1,4 +1,6 @@
-﻿using SimpleLoan.Domain.Finance;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SimpleLoan.Application.Exceptions;
+using SimpleLoan.Domain.Finance;
 
 namespace SimpleLoan.Application.Finance;
 
@@ -7,9 +9,7 @@ public class LoanCalculatorFactory : ILoanCalculatorFactory
     private readonly IServiceProvider _serviceProvider;
     private readonly IDictionary<string, Type> _types;
 
-    public LoanCalculatorFactory(
-        IDictionary<string, Type> types, 
-        IServiceProvider serviceProvider)
+    public LoanCalculatorFactory(IDictionary<string, Type> types, IServiceProvider serviceProvider)
     {
         _types = types;
         _serviceProvider = serviceProvider;
@@ -21,9 +21,9 @@ public class LoanCalculatorFactory : ILoanCalculatorFactory
 
         if (serviceType == null)
         {
-            throw new NotImplementedException();
+            throw new InvalidLoanTypeException();
         }
-
-        return (ILoanCalculator)_serviceProvider.GetService(serviceType);
+        
+        return (ILoanCalculator)_serviceProvider.GetRequiredService(serviceType);
     }
 }

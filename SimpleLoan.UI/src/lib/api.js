@@ -19,11 +19,13 @@ export function getCalculation(type, amount, period) {
 
 function get(url) {
     return new Promise((resolve, reject) => {
-        fetch(url, {
-            method: 'GET'
-        })
-        .then(response => {
-            return response.json();
+        fetch(url, { method: 'GET' })
+        .then(r => {
+            if (!r.ok) {
+                console.log(r);
+                throw new Error(r.statusText);
+            }
+            return r.json();
         })
         .then(resolve)
         .catch(reject);

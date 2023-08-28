@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using SimpleLoan.Application.Exceptions;
 using SimpleLoan.Application.Finance;
 using SimpleLoan.Domain.Finance;
 
@@ -32,7 +33,7 @@ public class LoanCalculatorFactoryTests
     }
 
     [Fact]
-    public void Get_WithInvalidType_ShouldThrowNotImplementedException()
+    public void Get_WithInvalidType_ShouldThrowInvalidLoanTypeException()
     {
         var types = new Dictionary<string, Type>();
         var serviceProvider = Substitute.For<IServiceProvider>();
@@ -41,6 +42,6 @@ public class LoanCalculatorFactoryTests
 
         var act = () => factory.Get(type);
 
-        act.Should().Throw<NotImplementedException>();
+        act.Should().Throw<InvalidLoanTypeException>();
     }
 }
